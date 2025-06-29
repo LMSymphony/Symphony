@@ -145,8 +145,8 @@ impl WebSocketsMiddleware {
     ) -> bool {
         let url = request.uri();
         // Create a URL to so the parameters can be queried
-        let url = url::Url::parse(&format!("ws://locahost{}", &url.to_string())).unwrap();
-        // Get tha parameters
+        let url = url::Url::parse(&format!("ws://localhost{}", &url.to_string())).unwrap();
+        // Get the parameters
         let parameters: HashMap<String, String> = url.query_pairs().into_owned().collect();
         let token = parameters.get("token");
         let state_id = parameters.get("state_id");
