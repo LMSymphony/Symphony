@@ -41,7 +41,10 @@ async fn main() {
         let sample_state = State::new(1, extensions_manager, Box::new(MemoryPersistor::new()));
 
         let states = StatesList::new()
-            .with_tokens(&[TokenFlags::All("test".to_string())])
+            .with_tokens(&[
+                TokenFlags::All("test".to_string()),
+                TokenFlags::All("graviton_token".to_string())
+            ])
             .with_state(sample_state);
 
         Arc::new(Mutex::new(states))
@@ -55,7 +58,7 @@ async fn main() {
 
     server.run().await;
 
-    println!("Open http://localhost:8080/?state=0&token=test");
+    println!("Open http://localhost:50010/?state_id=1&token=test");
 
     thread::park();
 }

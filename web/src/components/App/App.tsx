@@ -43,15 +43,21 @@ function ClientRoot() {
     // Retrieve the token and then create a new client
     getToken().then(async (token) => {
       if (token !== null) {
-        const client = await createClient(token);
+        try {
+          const client = await createClient(token);
 
-        // Wait until it's connected
-        client.whenConnected().then(() => {
-          setClient(client);
-          pushSidePanel(new ExplorerPanel());
-          pushSidePanel(new GitPanel());
-          setPrompts((val) => [...val, GlobalPrompt]);
-        });
+          // Wait until it's connected
+          client.whenConnected().then(() => {
+            setClient(client);
+            pushSidePanel(new ExplorerPanel());
+            pushSidePanel(new GitPanel());
+            setPrompts((val: any[]) => [...val, GlobalPrompt]);
+          });
+        } catch (error) {
+          console.error("Failed to create client:", error);
+        }
+      } else {
+        console.error("No authentication token found. Please provide a token in the URL parameters (e.g., ?token=test)");
       }
     });
   }, []);
